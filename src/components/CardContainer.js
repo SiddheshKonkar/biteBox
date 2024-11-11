@@ -76,7 +76,7 @@ const CardContainer = () => {
       </div>
       {masterCollection.length === 0 && !searchText ? (
         <div className="text-center text-3xl font-bold my-10">
-          Looking for great food for you
+          Looking for great food near you
         </div>
       ) : (
         restaurants.length === 0 && (
