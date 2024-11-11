@@ -23,7 +23,7 @@ const Header = () => {
           </a>
         </div>
         <a className="text-amber-700 font-semibold	text-lg" href="#">
-          Cart
+          Cart{" "}
         </a>
       </div>
 
