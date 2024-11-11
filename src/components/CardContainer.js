@@ -13,6 +13,13 @@ const CardContainer = () => {
     setRestaurants(newCollection);
   };
 
+  const handleDeliveryTime = () => {
+    const newCollection = restaurants.filter(
+      (restaurant) => restaurant?.info?.sla?.deliveryTime < 30
+    );
+    setRestaurants(newCollection);
+  };
+
   const handleSearch = () => {
     const filterdData = masterCollection.filter((restaurant) =>
       restaurant?.info?.name.toLowerCase().includes(searchText.toLowerCase())
@@ -40,9 +47,18 @@ const CardContainer = () => {
   return (
     <>
       {/* Search & Filters */}
-      <div className="flex justify-between gap-4 p-4 mx-10 mt-8">
+      <div className="flex justify-around gap-4 p-4 mx-28 mt-8">
         <button className="bg-amber-600 rounded-lg p-2" onClick={handleRating}>
-          Top Rated Restaurants
+          Ratings 4.5+
+        </button>
+        <button
+          className="bg-amber-600 rounded-lg p-2"
+          onClick={handleDeliveryTime}
+        >
+          Fast Delivery
+        </button>
+        <button className="bg-amber-600 rounded-lg p-2" onClick={"#"}>
+          Veg Restaurants
         </button>
         <div className="flex items-center gap-2">
           <input
@@ -60,11 +76,18 @@ const CardContainer = () => {
           </button>
         </div>
       </div>
-      {restaurants.length === 0 && (
-        <div className="text-center text-3xl font-bold">
-          No match found for "{searchText}"
+      {masterCollection.length === 0 && !searchText ? (
+        <div className="text-center text-3xl font-bold my-10">
+          Looking for great food for you
         </div>
+      ) : (
+        restaurants.length === 0 && (
+          <div className="text-center text-3xl font-bold my-10">
+            No match found for "{searchText}"
+          </div>
+        )
       )}
+
       <div className="flex flex-wrap justify-center gap-4 p-4 mx-10">
         {restaurants.map((restaurant, index) => (
           <RestaurantCard
@@ -74,6 +97,7 @@ const CardContainer = () => {
             cuisine={restaurant?.info?.cuisines}
             rating={restaurant?.info?.avgRating}
             location={restaurant?.info?.locality}
+            deliveryTime={restaurant?.info?.sla?.slaString}
           />
         ))}
       </div>
