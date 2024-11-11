@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 
 const CardContainer = () => {
-  let [restaurants, setRestaurants] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
+  const [masterCollection, setMasterCollection] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
   const handleRating = () => {
     const newCollection = restaurants.filter(
@@ -11,6 +13,12 @@ const CardContainer = () => {
     setRestaurants(newCollection);
   };
 
+  const handleSearch = () => {
+    const filterdData = masterCollection.filter((restaurant) =>
+      restaurant?.info?.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setRestaurants(filterdData);
+  };
   const getRestaurants = async () => {
     const data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.07480&lng=72.88560&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
@@ -19,19 +27,39 @@ const CardContainer = () => {
     setRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
-    console.log(restaurants);
+    setMasterCollection(
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
   };
+  console.log(restaurants);
 
-  getRestaurants();
+  useEffect(() => {
+    getRestaurants();
+  }, []);
 
   return (
     <>
-      <button
-        className="bg-amber-600 rounded-lg p-2 mx-24 mt-8 "
-        onClick={handleRating}
-      >
-        Top Rated Restaurants
-      </button>
+      {/* Search & Filters */}
+      <div className="flex justify-between gap-4 p-4 mx-10 mt-8">
+        <button className="bg-amber-600 rounded-lg p-2" onClick={handleRating}>
+          Top Rated Restaurants
+        </button>
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            placeholder="Search Restaurants"
+            className="bg-amber-100 rounded-lg p-2 w-96 border-2 border-pink-950"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+          <button
+            className="bg-amber-600 rounded-lg p-2"
+            onClick={handleSearch}
+          >
+            Search
+          </button>
+        </div>
+      </div>
       <div className="flex flex-wrap justify-center gap-4 p-4 mx-10">
         {restaurants.map((restaurant, index) => (
           <RestaurantCard
