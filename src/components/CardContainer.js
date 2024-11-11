@@ -60,6 +60,11 @@ const CardContainer = () => {
           </button>
         </div>
       </div>
+      {restaurants.length === 0 && (
+        <div className="text-center text-3xl font-bold">
+          No match found for "{searchText}"
+        </div>
+      )}
       <div className="flex flex-wrap justify-center gap-4 p-4 mx-10">
         {restaurants.map((restaurant, index) => (
           <RestaurantCard
