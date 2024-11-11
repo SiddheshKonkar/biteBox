@@ -57,9 +57,7 @@ const CardContainer = () => {
         >
           Fast Delivery
         </button>
-        <button className="bg-amber-600 rounded-lg p-2" onClick={"#"}>
-          Veg Restaurants
-        </button>
+        <button className="bg-amber-600 rounded-lg p-2">Veg Restaurants</button>
         <div className="flex items-center gap-2">
           <input
             type="text"
