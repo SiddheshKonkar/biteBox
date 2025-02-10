@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 const CardContainer = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -109,6 +110,7 @@ const CardContainer = () => {
       <div className="flex flex-wrap justify-center gap-4 p-4 mx-10">
         {restaurants.map((restaurant, index) => (
           <RestaurantCard
+            id={restaurant?.info?.id}
             key={index}
             name={restaurant?.info?.name}
             imgID={restaurant?.info?.cloudinaryImageId}

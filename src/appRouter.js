@@ -5,6 +5,7 @@ import Contact from "./components/Contact";
 import Body from "./components/Body";
 import Cart from "./components/Cart";
 import ErrorElement from "./components/ErrorElement";
+import Menu from "./components/Menu";
 
 const appRouter = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const appRouter = createBrowserRouter([
       {
         path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "menu/:id",
+        element: <Menu />,
       },
     ],
   },
